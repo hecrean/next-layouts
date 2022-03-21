@@ -1,0 +1,115 @@
+@import '../../styles/breakpoints';
+
+$header-height: 6rem;
+
+.root {
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0rem 4rem 0rem 4rem;
+
+  .header {
+    /* Stick to the top */
+    position: sticky;
+    top: 0;
+    height: $header-height;
+    background-color: white;
+    opacity: 0.9;
+  }
+
+  .mobileNavigation {
+    width: 100vh;
+    @include respond-above('md') {
+      display: none;
+      width: 0px;
+    }
+  }
+
+  .main {
+    /* Take the remaining height */
+    flex-grow: 1;
+
+    /* Layout the left sidebar, main content and right sidebar */
+    display: flex;
+    flex-direction: row;
+
+    .leftSidebar {
+      width: 20%;
+      min-width: 25rem;
+      &[data-open='false'] {
+        display: none;
+      }
+      @include respond-between('min-width', 'md') {
+        display: none;
+      }
+    }
+    .content {
+      /* Take the remaining width */
+      flex-direction: column;
+      flex-grow: 1;
+      display: grid;
+
+      /*
+      On large screens, it will take up 65ch width. On smaller screens,
+      where there isn't enough horizontal space for 65 characters,
+      it is clamped to 100% of the available container width
+      */
+      grid-template-columns:
+        1fr
+        #{'min(60ch, calc(100% - 64px))'}
+        1fr;
+      grid-column-gap: 32px;
+      grid-auto-rows: min-content; /*
+      By default, children will be slotted into the first available grid cell.
+      We want to override this default behaviour though; all children should sit
+      in the center column, leaving the first and third columns empty.
+      In CSS Grid, columns are 1-indexed, so 2 is a reference to the middle column.
+      */
+      & > * {
+        grid-column: 2;
+      }
+      /*
+      Allows a specific child to bust out of that column, and span all 3 columns.
+      1 / 4 is a start/end syntax; we're saying the element should start on Column 1
+      (inclusive) and span all the way to Column 4 (exclusive). (we can use -1 to index last)
+      */
+      & > *[data-full-bleed='true'] {
+        width: 100%;
+        grid-column: 1 / -1;
+      }
+    }
+    .rightSidebar {
+      margin-left: 1rem;
+      width: 20%;
+      min-width: 10rem;
+      @include respond-between('min-width', 'md') {
+        display: none;
+      }
+      ul {
+        border-left: 1px solid black;
+        position: sticky;
+        top: $header-height;
+      }
+    }
+  }
+
+  .footer {
+  }
+}
+
+.dialog {
+  z-index: 100;
+  display: grid;
+  justify-content: center;
+  top: 30%;
+
+  &:not([open]) {
+    display: none;
+  }
+}

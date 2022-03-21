@@ -1,0 +1,123 @@
+@use "sass:meta";
+
+//palette
+$off-white: rgb(250, 246, 245);
+$white: rgb(250, 246, 245);
+$grey-1: rgb(196, 194, 201);
+$grey-2: rgb(116, 118, 135);
+$grey-3: rgb(42, 45, 74);
+// $lightened-tint-color: color(var(--tint-color) whiteness(40%));
+$lightened-tint-color: rgb(148, 151, 173);
+$tint-color: var(--tint-color);
+
+$base-bg-color: $off-white;
+
+$chevron-color: rgb(116, 118, 135);
+
+$file-hover-bg-color: $lightened-tint-color;
+$file-hover-text-color: $grey-3;
+$file-active-bg-color: $base-bg-color;
+$file-active-text-color: $grey-3;
+$file-active-font-weight: 400;
+
+$folder-hover-bg-color: $lightened-tint-color;
+$folder-hover-text-color: $grey-3;
+$folder-active-bg-color: $off-white;
+$folder-active-text-color: $grey-3;
+$folder-active-font-weight: 600;
+
+.tree {
+  line-height: 30px;
+}
+
+.file {
+  width: 100%;
+  padding-left: 20px;
+
+  // padding-left: calc(var(--depth) * 0.25rem);
+  font-weight: 200;
+  color: $grey-2;
+  background-color: $base-bg-color;
+
+  background-clip: border-box;
+  display: flex;
+  align-items: center;
+  span {
+    margin-left: 5px;
+  }
+  &[data-active="true"] {
+    background-color: $file-active-bg-color;
+    color: $file-active-text-color;
+    font-weight: $file-active-font-weight;
+  }
+  &:hover {
+    background-color: $file-hover-bg-color;
+    color: $file-hover-text-color;
+    cursor: pointer;
+  }
+
+  span {
+    padding-right: 40px;
+  }
+}
+
+.folder {
+  $platform-depth: 0;
+  $sections-depth: 1;
+
+  width: 100%;
+  padding-left: 20px;
+
+  font-weight: 200;
+  color: $grey-2;
+  background-color: $base-bg-color;
+
+  &[data-depth="#{$sections-depth}"] {
+    padding-left: 0px;
+  }
+
+  .folderLabel {
+    display: flex;
+    align-items: center;
+    span {
+      margin-left: 5px;
+      margin-right: 5px;
+      padding-right: 40px;
+    }
+
+    &[data-active="true"] {
+      background-color: $folder-active-bg-color;
+      color: $folder-active-text-color;
+      font-weight: $folder-active-font-weight;
+    }
+
+    &[data-depth="#{$sections-depth}"] {
+      background-color: var(--tint-color);
+      color: white;
+    }
+
+    &:hover {
+      background-color: $folder-hover-bg-color;
+      color: $folder-hover-text-color;
+    }
+  }
+
+  .folderChevron {
+    transform: rotateZ(90deg);
+    color: $chevron-color;
+
+    &[data-open="true"] {
+      transform: rotateZ(0deg);
+    }
+  }
+}
+
+.collapsible {
+  overflow: hidden;
+  &[data-isOpen="false"] {
+    height: auto;
+  }
+  &[data-isOpen="true"] {
+    height: 0;
+  }
+}

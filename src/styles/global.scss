@@ -1,0 +1,12 @@
+@import './resets';
+
+$font-family: Helvetica;
+
+* {
+  font-family: $font-family;
+}
+
+//fluid layout
+h1 {
+  font-size: clamp(1.5rem, 4vw + 1rem, 3rem);
+}

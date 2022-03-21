@@ -1,0 +1,10 @@
+.palette {
+  --red-hue: 0deg;
+  --intense: 100% 50%;
+
+  --red: hsl(var(--red-hue) var(--intense));
+  --orange: hsl(calc(var(--red-hue) + 20deg) var(--intense));
+  --yellow: hsl(calc(var(--red-hue) + 40deg) var(--intense));
+  --pinkred: hsl(calc(var(--red-hue) - 20deg) var(--intense));
+  --pink: hsl(calc(var(--red-hue) - 40deg) var(--intense));
+}
